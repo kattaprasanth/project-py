@@ -36,3 +36,43 @@ def populate_table():
     conn.executemany(add_data_stmt, contract_list)
     conn.commit()
     conn.close()
+
+def read_from_table():
+    """
+    Return data from database.
+    """
+
+    sql_query = ''' SELECT author,title,due_date FROM authors; '''
+
+    conn = get_db_connection()
+    cur = conn.cursor()
+    cur.execute(sql_query)
+    results = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    return results
+
+def delete_data_from_db():
+    """
+    Delete selected data from database.
+
+    execute the given sql statement to remove
+    the extra data
+    """
+
+    sql_query = ''' DELETE FROM authors WHERE (author="Smith, Jackson" AND pages=400); '''
+
+    con = get_database_connection()
+    con.execute(sql_query)
+    con.commit()
+    con.close()
+
+def update_data():
+    sql_query = ''' UPDATE authors SET due_date="2020-10-31" WHERE author="Smith, Jackson"; '''
+
+    con = get_database_connection()
+    con.execute(sql_query)
+    con.commit()
+    con.close()
